@@ -1,0 +1,13 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml:2:13-83
+INJECTED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml:2:13-83
+	package
+		INJECTED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml
+	xmlns:android
+		ADDED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml:2:23-81
+uses-sdk
+INJECTED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml reason: use-sdk injection requested
+INJECTED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml
+	android:minSdkVersion
+		INJECTED from /Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/intermediates/tmp/ProcessLibraryManifest/tempAndroidManifest17176237375780835004.xml

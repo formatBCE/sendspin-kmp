@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SendSpinClientHelloTest[jvm]" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-07-11T20:40:14.504Z" hostname="Andriis-MacBook-Pro.local" time="0.009">
+  <properties/>
+  <testcase name="stream_end_with_color_role_clears_colorState[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <testcase name="hello_omits_mac_address_when_not_provided[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.004"/>
+  <testcase name="hello_advertises_exactly_flac_opus_pcm_48k_16bit_in_order[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <testcase name="hello_includes_device_info[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.001"/>
+  <testcase name="hello_advertises_visualizer_when_support_set[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.001"/>
+  <testcase name="stream_end_with_versioned_player_role_clears_streamFormat[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.001"/>
+  <testcase name="hello_includes_client_id_and_name[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <testcase name="hello_omits_visualizer_when_support_null[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.001"/>
+  <testcase name="hello_includes_controller_support_as_empty_object[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <testcase name="stream_end_with_visualizer_role_clears_config[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <testcase name="hello_advertises_artwork_channels_from_preferences[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.001"/>
+  <testcase name="hello_advertises_color_in_supported_roles[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <testcase name="hello_includes_mac_address_when_provided[jvm]" classname="com.sendspin.protocol.SendSpinClientHelloTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

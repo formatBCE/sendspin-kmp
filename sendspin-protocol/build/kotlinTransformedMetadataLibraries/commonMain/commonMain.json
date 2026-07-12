@@ -1,0 +1,392 @@
+[
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlin",
+        "name": "kotlin-stdlib"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlin-kotlin-stdlib-2.4.0-commonMain-pEpArg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-concurrentMain-BviMwQ.klib",
+    "sourceSetName": "concurrentMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-coroutines-core"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-coroutines-core-1.11.0-commonMain-BviMwQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-serialization-kotlinx-json"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-serialization-kotlinx-json"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-serialization-kotlinx-json-3.5.1-commonMain-TyAjGQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-client-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-client-core"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-client-core-3.5.1-jvmAndPosixMain-I4b4LQ.klib",
+    "sourceSetName": "jvmAndPosixMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-client-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-client-core"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-client-core-3.5.1-commonMain-I4b4LQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-client-websockets"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-client-websockets"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-client-websockets-3.5.1-commonMain-XfxeSw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-atomicfu-0.33.0-concurrentMain-blcSlw.klib",
+    "sourceSetName": "concurrentMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "atomicfu"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-atomicfu-0.33.0-commonMain-blcSlw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-serialization-kotlinx"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-serialization-kotlinx"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-serialization-kotlinx-3.5.1-commonMain-AxA5jw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-serialization-json-1.11.0-commonMain-1M5Mww.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json-io"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-json-io"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-serialization-json-io-1.11.0-commonMain-LT4sUA.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-http"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-http"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-http-3.5.1-commonMain-IO4VSw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-http-cio"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-http-cio"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-http-cio-3.5.1-jvmAndPosixMain-MJz0bQ.klib",
+    "sourceSetName": "jvmAndPosixMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-http-cio"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-http-cio"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-http-cio-3.5.1-commonMain-MJz0bQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-events"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-events"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-events-3.5.1-commonMain-uuFDaw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-websocket-serialization"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-websocket-serialization"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-websocket-serialization-3.5.1-commonMain-iH8_IQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-sse"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-sse"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-sse-3.5.1-commonMain-F-gmyQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-serialization"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-serialization"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-serialization-3.5.1-commonMain-wM1nNg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-serialization-core"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-serialization-core-1.11.0-commonMain-POu6Pw.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-core"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-io-core-0.9.0-commonMain-LSdToQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-utils"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-utils"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-utils-3.5.1-commonMain-obK1Wg.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-io"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-io"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-io-3.5.1-jvmAndPosixMain-e-qVRQ.klib",
+    "sourceSetName": "jvmAndPosixMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-io"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-io"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-io-3.5.1-commonMain-e-qVRQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "io.ktor",
+        "name": "ktor-websockets"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "io.ktor",
+        "name": "ktor-websockets"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/io.ktor-ktor-websockets-3.5.1-commonMain-AnS7yQ.klib",
+    "sourceSetName": "commonMain"
+  },
+  {
+    "moduleId": {
+      "groupAndName": {
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      },
+      "componentId": {
+        "type": "module",
+        "group": "org.jetbrains.kotlinx",
+        "name": "kotlinx-io-bytestring"
+      }
+    },
+    "file": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/kotlinTransformedMetadataLibraries/commonMain/org.jetbrains.kotlinx-kotlinx-io-bytestring-0.9.0-commonMain-ypuSdQ.klib",
+    "sourceSetName": "commonMain"
+  }
+]

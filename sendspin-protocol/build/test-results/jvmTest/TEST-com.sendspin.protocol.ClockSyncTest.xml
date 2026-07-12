@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ClockSyncTest[jvm]" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-07-11T20:40:13.251Z" hostname="Andriis-MacBook-Pro.local" time="0.007">
+  <properties/>
+  <testcase name="offset_converges_after_multiple_measurements_with_constant_offset[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.002"/>
+  <testcase name="toLocalMicros_extrapolates_drift_forward_once_drift_estimate_converges[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.002"/>
+  <testcase name="high_RTT_measurements_are_incorporated_but_with_less_weight[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="calculateProgress_clamps_to_track_duration[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="toLocalMicros_subtracts_offset_from_server_timestamp[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.001"/>
+  <testcase name="calculateProgress_clamps_to_zero_when_result_goes_negative[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="calculateProgress_extrapolates_at_1_5x_speed[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="low_RTT_outlier_perturbs_estimate_more_than_high_RTT_outlier[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.001"/>
+  <testcase name="toLocalMicros_result_does_not_vary_with_elapsed_time_when_drift_SNR_is_low[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="calculateProgress_returns_base_when_paused[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="offset_stays_accurate_and_drift_stays_sane_with_realistic_server_clock_offset[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.001"/>
+  <testcase name="single_measurement_moves_offset_away_from_zero[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="calculateProgress_extrapolates_forward_at_normal_speed[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="calculateProgress_does_not_clamp_upper_bound_when_duration_is_zero[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <testcase name="rtt_4ms_converges_as_tightly_as_the_1ms_convergence_test[jvm]" classname="com.sendspin.protocol.ClockSyncTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

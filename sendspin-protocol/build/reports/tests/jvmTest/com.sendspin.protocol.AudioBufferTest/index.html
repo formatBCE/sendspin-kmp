@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - com.sendspin.protocol.AudioBufferTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<a class="breadcrumb" href="../index.html">all</a> &gt; 
+<span class="breadcrumb">com.sendspin.protocol.AudioBufferTest</span>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="successGroup" href="#">Gradle Test Run :sendspin-protocol:jvmTest[jvm]</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Gradle Test Run :sendspin-protocol:jvmTest[jvm]</h2>
+<h1>AudioBufferTest[jvm]</h1>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a class="" href="#">summary</a>
+</li>
+</ul>
+<div class="tab">
+<h2>summary</h2>
+<div>
+<div class="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox">
+<div class="counter">16</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox">
+<div class="counter">0</div>
+<p>skipped</p>
+</div>
+</td>
+<td>
+<div class="infoBox duration">
+<div class="counter">0.479s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="test-results sortable">
+<thead>
+<tr>
+<th>Child</th>
+<th>Name</th>
+<th data-sort-default="desc">Tests</th>
+<th data-sort-default="desc">Failures</th>
+<th data-sort-default="desc">Skipped</th>
+<th data-sort-default="desc">Duration</th>
+<th>Success rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="success">buffer_evicts_furthest_future_when_full[jvm]</td>
+<td class="path">buffer_evicts_furthest_future_when_full</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">chunks_are_returned_in_timestamp_order[jvm]</td>
+<td class="path">chunks_are_returned_in_timestamp_order</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">chunks_exactly_at_drop_threshold_are_NOT_dropped[jvm]</td>
+<td class="path">chunks_exactly_at_drop_threshold_are_NOT_dropped</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">chunks_older_than_1s_are_dropped_on_offer[jvm]</td>
+<td class="path">chunks_older_than_1s_are_dropped_on_offer</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="4">0.004s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">clock_correction_after_offer_immediately_reshapes_schedule_of_queued_chunks[jvm]</td>
+<td class="path">clock_correction_after_offer_immediately_reshapes_schedule_of_queued_chunks</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">flush_empties_the_buffer[jvm]</td>
+<td class="path">flush_empties_the_buffer</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">nextChunkDelayMicros_returns_delay_for_future_chunk[jvm]</td>
+<td class="path">nextChunkDelayMicros_returns_delay_for_future_chunk</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">nextChunkDelayMicros_returns_null_when_empty[jvm]</td>
+<td class="path">nextChunkDelayMicros_returns_null_when_empty</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">offering_chunk_after_underrun_clears_underrunState[jvm]</td>
+<td class="path">offering_chunk_after_underrun_clears_underrunState</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="poll_returns_chunk_when_its_time_has_passed.html">poll_returns_chunk_when_its_time_has_passed[jvm]</a>
+</td>
+<td class="path">poll_returns_chunk_when_its_time_has_passed</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="462">0.462s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">poll_returns_null_after_flush[jvm]</td>
+<td class="path">poll_returns_null_after_flush</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">poll_returns_null_when_no_chunk_is_ready_yet[jvm]</td>
+<td class="path">poll_returns_null_when_no_chunk_is_ready_yet</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">signalUnderrun_sets_underrunState_to_true[jvm]</td>
+<td class="path">signalUnderrun_sets_underrunState_to_true</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">staticDelayMicros_shifts_scheduled_play_time_earlier[jvm]</td>
+<td class="path">staticDelayMicros_shifts_scheduled_play_time_earlier</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">underrunState_is_false_initially[jvm]</td>
+<td class="path">underrunState_is_false_initially</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">zero_staticDelayMicros_does_not_shift_playback_time[jvm]</td>
+<td class="path">zero_staticDelayMicros_does_not_shift_playback_time</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="0">0s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.6.1</a> at Jul. 11, 2026, 1:40:14 p.m.</p>
+</div>
+</div>
+</body>
+</html>

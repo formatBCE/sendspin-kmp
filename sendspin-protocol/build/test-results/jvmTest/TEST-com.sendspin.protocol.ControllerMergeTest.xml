@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ControllerMergeTest[jvm]" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-07-11T20:40:13.260Z" hostname="Andriis-MacBook-Pro.local" time="0.024">
+  <properties/>
+  <testcase name="old_server_metadata_explicit_null_clears_previously_set_shuffle[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.022"/>
+  <testcase name="old_server_controller_volume_only_metadata_supplies_repeat_and_shuffle[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="old_server_metadata_repeat_without_prior_controller_state_is_ignored[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="old_server_metadata_explicit_null_clears_previously_set_repeat[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="controller_repeat_wins_over_metadata_repeat_when_both_present[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="no_repeat_or_shuffle_in_either_source_leaves_controller_state_null[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="controller_null_repeat_is_not_overridden_by_metadata_repeat[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="new_server_repeat_and_shuffle_from_controller_are_used[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <testcase name="old_server_metadata_repeat_and_shuffle_update_existing_controller_state[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.001"/>
+  <testcase name="controller_volume_only_update_preserves_previously_merged_repeat_and_shuffle[jvm]" classname="com.sendspin.protocol.ControllerMergeTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

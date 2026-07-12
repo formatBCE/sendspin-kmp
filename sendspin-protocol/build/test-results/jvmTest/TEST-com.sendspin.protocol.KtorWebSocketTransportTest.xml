@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="KtorWebSocketTransportTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-07-11T20:40:13.290Z" hostname="Andriis-MacBook-Pro.local" time="1.183">
+  <properties/>
+  <testcase name="echoes_binary_frame_unchanged[jvm]" classname="com.sendspin.protocol.KtorWebSocketTransportTest" time="0.67"/>
+  <testcase name="connects_and_echoes_text_frame[jvm]" classname="com.sendspin.protocol.KtorWebSocketTransportTest" time="0.513"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
