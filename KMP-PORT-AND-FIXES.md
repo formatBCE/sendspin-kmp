@@ -10,9 +10,10 @@ two parts so you can triage quickly:
   These are *not* behavior changes and are generally **not** things to adopt into the JVM library —
   they exist only because KMP forbids JVM-only APIs. Listed for context and to explain why some
   files moved or changed shape.
-- **Part B — Fixes & behavioral divergences.** These *are* candidates to adopt. One is a genuine
-  **correctness bug present in sendspin-jvm** (B1) and should be taken regardless of anything else.
-  The others are opt-in behavioral choices (B2/B3 are a linked pair; B4 are additive config knobs).
+- **Part B — Fixes & behavioral divergences.** These *are* candidates to adopt. Two are correctness
+  bugs present in sendspin-jvm and should be taken regardless of anything else: **B1** (certain) and
+  **B5** (very likely — see its caveat). The rest are opt-in behavioral choices (B2/B3 are a linked
+  pair; B4 are additive config knobs).
 
 Line numbers are indicative (they drift); grep the named symbols to locate current sites.
 
@@ -45,8 +46,10 @@ The JVM library has a thin `SendSpinWebSocket { send; close }` with OkHttp/Java-
 and `SendSpinClient` drives the OkHttp `WebSocketListener` directly. The KMP port introduces a
 first-class carrier abstraction:
 
-- **`SendSpinTransport`** — `state: StateFlow<TransportState>`, `textFrames: Flow<String>`,
-  `binaryFrames: Flow<ByteArray>`, `connect()/send(text)/send(bytes)/disconnect()/close()`.
+- **`SendSpinTransport`** — `state: StateFlow<TransportState>`, **`frames: Flow<TransportFrame>`**,
+  `connect()/send(text)/send(bytes)/disconnect()/close()`.
+- **`TransportFrame`** — a sealed `Text(text)` / `Binary(bytes)`, so control and audio frames travel
+  through **one ordered flow** in exact wire order.
 - **`KtorWebSocketTransport`** — the Ktor implementation.
 - `SendSpinClient` takes a **`transportFactory: () -> SendSpinTransport`** and is fully
   carrier-agnostic (the consuming app also plugs a WebRTC data-channel transport and an
@@ -54,6 +57,25 @@ first-class carrier abstraction:
 
 This is the largest structural change. It is a KMP/architecture decision, not a bug fix, but it is
 the reason several client-side seams below look different from the JVM code.
+
+**A cautionary note on the single `frames` flow — this is us fixing our own mistake, not yours.**
+The port originally exposed `textFrames: Flow<String>` and `binaryFrames: Flow<ByteArray>` as two
+separate flows, collected by two coroutines in `SendSpinClient.doConnect`. That silently destroyed
+wire ordering: a straggler audio chunk sitting in one flow's buffer could be handled *after* a
+`stream/start` that arrived behind it on the wire, so the discontinuity marker no longer sat between
+the last old-stream chunk and the first new-stream chunk. On a skip, the two streams interleaved by
+server timestamp and played as **two tracks mixed together** (rarely, and worse on cellular, where
+transport backlogs are deeper).
+
+**sendspin-jvm cannot hit this and needs no change here.** OkHttp's `WebSocketListener` delivers
+`onMessage(text)` and `onMessage(bytes)` on a single reader thread, straight into
+`handleTextMessage`/`handleBinaryMessage` (`SendSpinClient.kt:303-311`, `:585`) — ordering is
+preserved by construction, with no intermediate flow or channel to reorder them. The dual-flow demux
+was an artifact of adapting Ktor's `incoming` channel, and collapsing it back to one ordered flow
+merely restores the guarantee you already had.
+
+What *does* carry over is the second half of the same fix — making the discontinuity buffer clear
+synchronous with the frame that triggers it. See **B5**.
 
 ### A3. Time base (`ClockSync.localMicros`)
 ```kotlin
@@ -238,22 +260,29 @@ chunks replaying after stop).
 
 The distinguishing signal is whether a `stream/end` preceded this `stream/start`. A seek/skip always
 emits `stream/end` first (so `pendingStopJob` is set, or the delayed stop already fired); a
-reconnect-recovery does not. In the `StreamStart` handler:
+reconnect-recovery does not. In the `StreamStart` handler (note the flush is **synchronous** on the
+frame collector — that part is B5, and is orthogonal to the guard below):
 ```kotlin
+// Reconnect-recovery re-issues stream/start with NO preceding stream/end (pendingStopJob null) and
+// playback still live — keep the buffer. Everything else (seek / skip / stop→restart) is a
+// discontinuity: drop the old position's chunks or they mix with the new position's.
+val reconnectResume = audioPlayer.isPlaying && pendingStopJob == null
+pendingStopJob?.cancel(); pendingStopJob = null
+if (!reconnectResume) audioBuffer.flush()          // synchronous, in wire order (B5)
 audioScope.launch {
-    // Reconnect-recovery re-issues stream/start with NO preceding stream/end (pendingStopJob null)
-    // and playback still live — keep the buffer. Everything else (seek / skip / stop→restart) is a
-    // discontinuity: drop the old position's chunks or they mix with the new position's.
-    val reconnectResume = audioPlayer.isPlaying && pendingStopJob == null
-    pendingStopJob?.cancel(); pendingStopJob = null
-    if (!reconnectResume) audioPlayer.flush()
-    if (audioPlayer.isPlaying) audioPlayer.transition(msg.player)
-    else { audioPlayer.configure(msg.player); audioPlayer.start() }
+    if (!reconnectResume) audioPlayer.flushSink()  // async sink drain only — never touches the buffer
+    if (audioPlayer.isPlaying) audioPlayer.transition(player)
+    else { audioPlayer.configure(player); audioPlayer.start() }
 }
 ```
-This is a KMP-only change today precisely because it is coupled to B2. (Note: this masks a latent
-issue — on the *client* side the equivalent of `AudioPlayer.transition()/configure()` should flush
-the sink+buffer; in the KMP consuming app that's done in the host `AudioPlayer` implementation.)
+The `reconnectResume` guard is KMP-only today precisely because it is coupled to B2: without the
+keep-buffer-across-drops divergence, every `stream/start`-while-playing *is* a discontinuity, so a
+JVM port of B5 flushes unconditionally and needs no guard.
+
+Because the guard reads `pendingStopJob` on the frame collector while the delayed stop job nulls it
+on `audioScope`, the field is `@Volatile` here and `StreamEnd`'s `pendingStopJob` assignment was
+moved onto the collector too. Upstream needs neither: it writes and reads that field entirely within
+`audioScope`.
 
 ---
 
@@ -279,6 +308,60 @@ None are bug fixes; adopt only if useful to you.
 
 ---
 
+## B5. The discontinuity flush must be synchronous with the frame that triggers it — **likely bug in sendspin-jvm, independent of B2/B3**
+
+Both libraries route buffer clearing through the `AudioPlayer` SPI. In sendspin-jvm, two of the three
+call sites are **synchronous** on the OkHttp reader thread:
+
+- the first-measurement flush — `SendSpinClient.kt:398`, `audioPlayer.flush()`
+- `stream/clear` — `SendSpinClient.kt:432`, `audioPlayer.flush()`
+
+The third — the discontinuity `stream/start`, `SendSpinClient.kt:416` — is **asynchronous**: it
+defers into `audioScope.launch { … transition() / configure() … }`, and those SPI calls are where the
+flush is contractually expected to happen (your own comment on the `stream/end` path, `:444`: *"Don't
+flush here — transition() and configure() flush when the next stream/start arrives."*).
+
+### The race
+
+The reader thread does not wait for that coroutine. It keeps parsing frames and calling
+`audioBuffer.offer()` for the **new** stream's chunks (`:594`). When the launched coroutine finally
+runs and flushes, it clears whatever is in the buffer by then — which now includes new-stream chunks
+that arrived after the `stream/start`. They are discarded along with the stale ones.
+
+The symptom upstream is *not* the mixing we saw in KMP (your ordered ingress means no stale chunk can
+arrive after the marker — see A2); it is a **clipped or late start after a seek/skip**, proportional
+to how many new chunks land inside the window. The window is the coroutine dispatch latency of
+`audioScope` (`Dispatchers.IO.limitedParallelism`) measured against a ~20-100 ms chunk cadence — so
+usually zero chunks, but it widens under IO-dispatcher contention, and it is pure chance that decides.
+
+### The fix, as ported
+
+Split the two responsibilities the SPI's `flush()` was conflating:
+
+- the **client** clears its own `audioBuffer` **synchronously**, on the thread that handled the
+  `stream/start`, so the clear lands in wire order — strictly after the last old chunk was offered and
+  strictly before the first new one is;
+- the SPI method narrows to **`AudioPlayer.flushSink()`** — drain the hardware sink so already-queued
+  old audio stops — and is explicitly documented to **never touch the library buffer**, so it remains
+  safe to run late on the audio thread.
+
+See the snippet in B3. A JVM adoption is the same shape minus the `reconnectResume` guard (flush
+unconditionally) and can be done on `SendSpinClient` alone; the only breaking change for hosts is the
+`flush()` → `flushSink()` rename plus the "must not clear the buffer" contract.
+
+### Caveat — verify this against your reference `AudioPlayer` before believing it
+
+We could not confirm from the library sources alone that a JVM `AudioPlayer` implementation actually
+clears the library's `AudioBuffer` inside `transition()`/`configure()`; the comments at `:398`
+(*"Delegated through audioPlayer so implementations that don't need timing-based flushing … can
+override flush() as a no-op"*) and `:444` assert it as the contract, but the implementations live
+outside this repo. If your player instead clears the buffer synchronously before dispatching to its
+audio thread, the window closes and B5 is a latent design smell rather than a live bug — the SPI
+contract still leaves each host free to reintroduce it. Either way, moving the buffer clear into the
+client (where the ordering guarantee actually exists) is the change we would argue for.
+
+---
+
 ## Adoption summary
 
 | Item | Kind | Recommended for sendspin-jvm |
@@ -287,4 +370,6 @@ None are bug fixes; adopt only if useful to you.
 | B2 Audio/network decoupling | Behavioral | Optional (seamless reconnect) |
 | B3 Seek/skip flush guard | Correctness, coupled to B2 | **Only if you adopt B2** |
 | B4 Config knobs | Additive API | Optional |
+| **B5** Synchronous discontinuity flush | Likely correctness bug (present in jvm) | **Yes — independent of B2/B3** (confirm against your `AudioPlayer` first) |
 | Part A (port mechanics) | Platform | No |
+| Part A2 single `frames` flow | Port artifact — fixes a bug we introduced | No — your OkHttp listener is already ordered |

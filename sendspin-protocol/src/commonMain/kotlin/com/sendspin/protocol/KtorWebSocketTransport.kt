@@ -45,13 +45,11 @@ class KtorWebSocketTransport(
     private val _state = MutableStateFlow<TransportState>(TransportState.Connecting)
     override val state: StateFlow<TransportState> = _state
 
-    // Text frames are low-rate; binary carries audio, so give it generous slack. SUSPEND on
+    // One ordered flow for both text and binary — preserves wire order so a stream/start is handled
+    // between the correct audio chunks. Binary carries audio, so give generous slack; SUSPEND on
     // overflow rather than DROP — dropping an audio chunk here is worse than brief backpressure.
-    private val _textFrames = MutableSharedFlow<String>(extraBufferCapacity = 256, onBufferOverflow = BufferOverflow.SUSPEND)
-    override val textFrames: SharedFlow<String> = _textFrames.asSharedFlow()
-
-    private val _binaryFrames = MutableSharedFlow<ByteArray>(extraBufferCapacity = 2048, onBufferOverflow = BufferOverflow.SUSPEND)
-    override val binaryFrames: SharedFlow<ByteArray> = _binaryFrames.asSharedFlow()
+    private val _frames = MutableSharedFlow<TransportFrame>(extraBufferCapacity = 2048, onBufferOverflow = BufferOverflow.SUSPEND)
+    override val frames: SharedFlow<TransportFrame> = _frames.asSharedFlow()
 
     @Volatile private var session: DefaultClientWebSocketSession? = null
 
@@ -74,8 +72,8 @@ class KtorWebSocketTransport(
             try {
                 for (frame in s.incoming) {
                     when (frame) {
-                        is Frame.Text -> _textFrames.emit(frame.readText())
-                        is Frame.Binary -> _binaryFrames.emit(frame.readBytes())
+                        is Frame.Text -> _frames.emit(TransportFrame.Text(frame.readText()))
+                        is Frame.Binary -> _frames.emit(TransportFrame.Binary(frame.readBytes()))
                         else -> { /* Ping/Pong/Close handled by Ktor */ }
                     }
                 }

@@ -111,7 +111,9 @@ class SendSpinClient(
     private var clockJob: Job? = null
     private var stateJob: Job? = null
     private var diagnosticsJob: Job? = null
-    private var pendingStopJob: Job? = null
+    // @Volatile: assigned/cancelled on the frame collector (StreamStart/StreamEnd) but self-nulled by
+    // the delayed stop job on audioScope — cross-thread visibility for the reconnectResume guard.
+    @Volatile private var pendingStopJob: Job? = null
 
     private val _state = MutableStateFlow(ClientState.IDLE)
     val state: StateFlow<ClientState> = _state
@@ -284,8 +286,17 @@ class SendSpinClient(
                     }
                 }
             }
-            launch { t.textFrames.collect { handleTextMessage(it) } }
-            launch { t.binaryFrames.collect { handleBinaryMessage(it) } }
+            // ONE collector over the single ordered frame flow: text and binary are handled in exact
+            // wire order on one coroutine (sequential even on a multi-threaded dispatcher), so a
+            // stream/start's synchronous buffer clear lands between the right audio chunks.
+            launch {
+                t.frames.collect { frame ->
+                    when (frame) {
+                        is TransportFrame.Text -> handleTextMessage(frame.text)
+                        is TransportFrame.Binary -> handleBinaryMessage(frame.bytes)
+                    }
+                }
+            }
             t.connect()
         }
     }
@@ -365,7 +376,9 @@ class SendSpinClient(
                 if (!firstMeasurementCompleted) {
                     firstMeasurementCompleted = true
                     // Flush chunks that arrived with offset=0 before the first estimate was ready.
-                    audioPlayer.flush()
+                    // Buffer clear is synchronous (ordered on this collector); sink drain is async.
+                    audioBuffer.flush()
+                    audioScope.launch { audioPlayer.flushSink() }
                 }
                 if (_state.value == ClientState.CLOCK_SYNCING) {
                     _state.value = ClientState.STREAMING
@@ -380,26 +393,30 @@ class SendSpinClient(
                 artworkChannels.forEachIndexed { i, ch ->
                     Timber.d("SendSpinClient: stream/start artwork ch=%d source=%s %dx%d", i, ch.source, ch.width, ch.height)
                 }
-                if (msg.player != null) {
-                    Timber.i("SendSpinClient: stream/start codec=%s", msg.player.codec)
+                val player = msg.player
+                if (player != null) {
+                    Timber.i("SendSpinClient: stream/start codec=%s", player.codec)
                     sendClientState()
+                    // The buffer clear MUST be synchronous here on the frame collector so it lands in
+                    // wire order — strictly after the last old-stream chunk (offered earlier on this
+                    // same collector) and before the first new-stream chunk (offered later). An async
+                    // hop would let a straggler old chunk slip in after the clear and interleave.
+                    // Reconnect-recovery re-issues stream/start with NO preceding stream/end
+                    // (pendingStopJob null, still playing) → keep the buffer (see onTransportClosed).
+                    // Every other stream/start follows a stream/end (seek/skip/stop→restart) and is a
+                    // discontinuity whose stale chunks must be dropped, or the two streams mix.
+                    val reconnectResume = audioPlayer.isPlaying && pendingStopJob == null
+                    pendingStopJob?.cancel()
+                    pendingStopJob = null
+                    if (!reconnectResume) audioBuffer.flush()
                     audioScope.launch {
-                        // This client keeps the audio buffer draining across transport reconnects
-                        // (see onTransportClosed — diverges from upstream, which stops audio on drop).
-                        // A reconnect-recovery re-issues stream/start with NO preceding stream/end,
-                        // so pendingStopJob is null and playback is still live — keep the buffer.
-                        // Any other stream/start follows a stream/end (seek / skip / stop→restart) and
-                        // is a *discontinuity*: the old position's buffered chunks must be dropped, or
-                        // they interleave by server timestamp with the new position and play as two
-                        // tracks mixed together.
-                        val reconnectResume = audioPlayer.isPlaying && pendingStopJob == null
-                        pendingStopJob?.cancel()
-                        pendingStopJob = null
-                        if (!reconnectResume) audioPlayer.flush()
+                        // Sink drain is async (audio thread) and does NOT clear the buffer, so it
+                        // can't wipe new-stream chunks already offered after the synchronous flush.
+                        if (!reconnectResume) audioPlayer.flushSink()
                         if (audioPlayer.isPlaying) {
-                            audioPlayer.transition(msg.player)
+                            audioPlayer.transition(player)
                         } else {
-                            audioPlayer.configure(msg.player)
+                            audioPlayer.configure(player)
                             audioPlayer.start()
                         }
                     }
@@ -409,7 +426,10 @@ class SendSpinClient(
             }
             is StreamClear -> {
                 Timber.d("SendSpinClient: stream/clear")
-                audioPlayer.flush()
+                // Same split as the discontinuity stream/start: synchronous buffer clear (ordered on
+                // this collector), async sink drain.
+                audioBuffer.flush()
+                audioScope.launch { audioPlayer.flushSink() }
             }
             is StreamEnd -> {
                 val roles = msg.roles
@@ -419,16 +439,16 @@ class SendSpinClient(
                 if (endPlayer) {
                     _streamFormat.value = null
                     sendClientState()
-                    audioScope.launch {
-                        pendingStopJob?.cancel()
-                        // Don't flush here — transition()/configure() flush when the next stream/start
-                        // arrives. Flushing now would empty the buffer and cause underrun warnings
-                        // during track handoffs.
-                        pendingStopJob = audioScope.launch {
-                            delay(SEEK_HANDOFF_MS)
-                            pendingStopJob = null
-                            audioPlayer.stop()
-                        }
+                    // Manage pendingStopJob synchronously on the frame collector so a following
+                    // stream/start (also on this collector) reliably observes it — the reconnectResume
+                    // guard reads pendingStopJob and must see this write. Only the delayed stop runs on
+                    // audioScope. Don't flush here — the discontinuity buffer clear happens on the next
+                    // stream/start; flushing now would cause underruns during gapless track handoffs.
+                    pendingStopJob?.cancel()
+                    pendingStopJob = audioScope.launch {
+                        delay(SEEK_HANDOFF_MS)
+                        pendingStopJob = null
+                        audioPlayer.stop()
                     }
                 }
                 if (endArtwork) {

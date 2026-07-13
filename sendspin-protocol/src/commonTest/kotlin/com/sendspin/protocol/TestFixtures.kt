@@ -5,11 +5,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
-/** No-op transport for tests that exercise message handling without a real connection. */
+/** No-op transport for tests that exercise message handling without a real connection.
+ *  [stateFlow] and [framesFlow] are public so tests can drive the connection lifecycle and feed
+ *  ordered incoming frames. */
 class NoopTransport : SendSpinTransport {
-    override val state: StateFlow<TransportState> = MutableStateFlow(TransportState.Disconnected)
-    override val textFrames: SharedFlow<String> = MutableSharedFlow()
-    override val binaryFrames: SharedFlow<ByteArray> = MutableSharedFlow()
+    val stateFlow = MutableStateFlow<TransportState>(TransportState.Disconnected)
+    override val state: StateFlow<TransportState> = stateFlow
+    val framesFlow = MutableSharedFlow<TransportFrame>(extraBufferCapacity = 256)
+    override val frames: SharedFlow<TransportFrame> = framesFlow
     val sentText = mutableListOf<String>()
     override suspend fun connect() {}
     override fun send(text: String): Boolean { sentText += text; return true }
@@ -25,7 +28,7 @@ class RecordingAudioPlayer : AudioPlayer {
     override val droppedDecodeFrames = 0L
     override fun configure(format: StreamFormat) {}
     override fun start() {}
-    override fun flush() {}
+    override fun flushSink() {}
     override fun stop() {}
     override fun transition(format: StreamFormat) {}
     override fun setVolume(gain: Float) { gains += gain }

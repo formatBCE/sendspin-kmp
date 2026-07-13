@@ -17,6 +17,7 @@ import io.ktor.websocket.send
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -69,7 +70,9 @@ class KtorWebSocketTransportTest {
                 assertEquals(TransportState.Connected, transport.state.value)
 
                 // UNDISPATCHED so the collector subscribes to the SharedFlow before we send.
-                val received = async(start = CoroutineStart.UNDISPATCHED) { transport.textFrames.first() }
+                val received = async(start = CoroutineStart.UNDISPATCHED) {
+                    transport.frames.filterIsInstance<TransportFrame.Text>().first().text
+                }
                 assertTrue(transport.send("hello"))
                 assertEquals("echo:hello", received.await())
             }
@@ -87,7 +90,9 @@ class KtorWebSocketTransportTest {
             withTimeout(10_000) {
                 transport.connect()
                 val payload = byteArrayOf(0x04, 0x00, 0x01, 0xFF.toByte(), 0x7F)
-                val received = async(start = CoroutineStart.UNDISPATCHED) { transport.binaryFrames.first() }
+                val received = async(start = CoroutineStart.UNDISPATCHED) {
+                    transport.frames.filterIsInstance<TransportFrame.Binary>().first().bytes
+                }
                 assertTrue(transport.send(payload))
                 assertTrue(payload.contentEquals(received.await()))
             }
