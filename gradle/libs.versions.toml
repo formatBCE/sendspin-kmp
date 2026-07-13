@@ -6,6 +6,7 @@ kotlinx-coroutines = "1.11.0"
 kotlinx-atomicfu = "0.33.0"
 ktor = "3.5.1"
 mockk = "1.13.12"
+vanniktech-mavenPublish = "0.34.0"
 android-compileSdk = "37"
 android-minSdk = "28"
 
@@ -27,3 +28,4 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-mavenPublish" }

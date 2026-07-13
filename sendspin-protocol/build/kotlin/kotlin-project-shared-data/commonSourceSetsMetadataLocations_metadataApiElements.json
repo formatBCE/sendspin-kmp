@@ -1,8 +1,0 @@
-{
-  "locationBySourceSetName": {
-    "appleMain": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/classes/kotlin/metadata/appleMain/klib/sendspin-protocol_appleMain",
-    "commonMain": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/classes/kotlin/metadata/commonMain",
-    "iosMain": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/classes/kotlin/metadata/iosMain/klib/sendspin-protocol_iosMain",
-    "nativeMain": "/Users/amitnovych/Documents/Personal/Git/sendspin-kmp/sendspin-protocol/build/classes/kotlin/metadata/nativeMain/klib/sendspin-protocol_nativeMain"
-  }
-}

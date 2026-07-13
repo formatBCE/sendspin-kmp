@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.androidMultiplatformLibrary)
+    alias(libs.plugins.mavenPublish)
 }
 
 kotlin {
@@ -50,6 +51,46 @@ kotlin {
             implementation(libs.ktor.server.cio)            // embedded echo WebSocket server
             implementation(libs.ktor.server.websockets)
             implementation(libs.mockk)                      // AudioBuffer test mocks the ClockSync estimate
+        }
+    }
+}
+
+// Maven Central (Central Portal) publishing. Coordinates/POM below; credentials + GPG key come from
+// Gradle properties / env at publish time (see .github/workflows/publish.yml and PUBLISHING.md).
+// vanniktech auto-configures publications for every KMP target (android/jvm/iosArm64/iosSimulatorArm64)
+// plus the root module and sources/javadoc jars.
+mavenPublishing {
+    publishToMavenCentral(automaticRelease = true)
+    signAllPublications()
+
+    coordinates(group.toString(), "sendspin-protocol", version.toString())
+
+    pom {
+        name.set("SendSpin Protocol (KMP)")
+        description.set(
+            "Kotlin Multiplatform client for the SendSpin audio-streaming protocol (player@v1): " +
+                "clock sync, timestamp-scheduled audio buffering, and a carrier-agnostic transport.",
+        )
+        inceptionYear.set("2026")
+        url.set("https://github.com/formatBCE/sendspin-kmp")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("formatBCE")
+                name.set("formatBCE")
+                url.set("https://github.com/formatBCE")
+            }
+        }
+        scm {
+            url.set("https://github.com/formatBCE/sendspin-kmp")
+            connection.set("scm:git:git://github.com/formatBCE/sendspin-kmp.git")
+            developerConnection.set("scm:git:ssh://git@github.com/formatBCE/sendspin-kmp.git")
         }
     }
 }

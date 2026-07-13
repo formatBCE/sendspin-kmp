@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="StaticDelayPersistenceTest[jvm]" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-07-11T20:40:14.513Z" hostname="Andriis-MacBook-Pro.local" time="0.001">
-  <properties/>
-  <testcase name="static_delay_is_loaded_from_settings_store_on_construction[jvm]" classname="com.sendspin.protocol.StaticDelayPersistenceTest" time="0.0"/>
-  <testcase name="setStaticDelayMs_persists_value_to_settings_store[jvm]" classname="com.sendspin.protocol.StaticDelayPersistenceTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

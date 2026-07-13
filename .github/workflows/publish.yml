@@ -1,0 +1,35 @@
+name: Publish to Maven Central
+
+# Publishes on a version tag (e.g. v0.1.0) or manual dispatch. Runs on macOS because the iOS
+# targets (iosArm64 / iosSimulatorArm64) can only be built with Xcode — this is exactly why
+# JitPack (Linux-only) cannot produce a consumable artifact for this library.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # vanniktech reads credentials + the in-memory GPG key from these Gradle project properties
+      # (ORG_GRADLE_PROJECT_* env vars). automaticRelease=true in build.gradle.kts means the
+      # deployment is released to Maven Central without a manual click in the Central Portal.
+      - name: Publish to Maven Central
+        run: ./gradlew publishToMavenCentral --no-configuration-cache --stacktrace
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
